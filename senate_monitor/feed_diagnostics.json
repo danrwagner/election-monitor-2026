@@ -1,7 +1,32 @@
 {
-  "checked_at": "2026-11-04T03:09:29.288561+00:00",
+  "checked_at": "2026-11-04T03:12:46.554699+00:00",
   "status": "schema_discovery_only",
   "checks": [
+    {
+      "provider": "arizona_2026_official",
+      "url": "https://app.enhancedvoting.com/cdn/results/Arizona/export-110326GeneralElection.json",
+      "params": {},
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "json_type": "dict",
+      "payload_bytes": 71719155,
+      "source": "Arizona Secretary of State / Enhanced Voting",
+      "note": "Schema only, no election counts imported",
+      "top_level_keys": [
+        "electionDate",
+        "electionName",
+        "createdAt",
+        "results",
+        "localResults"
+      ],
+      "field_types": {
+        "electionDate": "str",
+        "electionName": "str",
+        "createdAt": "str",
+        "results": "dict",
+        "localResults": "list"
+      }
+    },
     {
       "provider": "civicapi",
       "url": "https://civicapi.org/api/v2/races",
