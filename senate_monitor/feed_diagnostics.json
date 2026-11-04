@@ -1,12 +1,90 @@
 {
-  "checked_at": "2026-11-04T03:07:18.836864+00:00",
+  "checked_at": "2026-11-04T03:08:39.304671+00:00",
   "status": "schema_discovery_only",
   "checks": [
     {
+      "provider": "civicapi",
       "url": "https://civicapi.org/api/v2/races",
+      "params": {},
       "http_status": 502,
       "content_type": "text/html; charset=UTF-8",
-      "error": "Non-JSON response"
+      "error": "HTTP error; no data imported"
+    },
+    {
+      "provider": "peoples_tally",
+      "url": "https://thepeoplestally.com/data/results.json",
+      "params": {},
+      "http_status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "error": "HTTP error; no data imported"
+    },
+    {
+      "provider": "pollingforecast_2024_sc",
+      "url": "https://www.pollingforecast.com/api/us/counties",
+      "params": {
+        "office": "P",
+        "year": 2024,
+        "state": "SC"
+      },
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "json_type": "dict",
+      "top_level_keys": [
+        "dataset",
+        "title",
+        "description",
+        "asOf",
+        "licence",
+        "licenceNote",
+        "attribution",
+        "count",
+        "rows"
+      ],
+      "field_types": {
+        "dataset": "str",
+        "title": "str",
+        "description": "str",
+        "asOf": "str",
+        "licence": "str",
+        "licenceNote": "str",
+        "attribution": "str",
+        "count": "int",
+        "rows": "list"
+      }
+    },
+    {
+      "provider": "pollingforecast_2022_sc",
+      "url": "https://www.pollingforecast.com/api/us/counties",
+      "params": {
+        "office": "S",
+        "year": 2022,
+        "state": "SC"
+      },
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "json_type": "dict",
+      "top_level_keys": [
+        "dataset",
+        "title",
+        "description",
+        "asOf",
+        "licence",
+        "licenceNote",
+        "attribution",
+        "count",
+        "rows"
+      ],
+      "field_types": {
+        "dataset": "str",
+        "title": "str",
+        "description": "str",
+        "asOf": "str",
+        "licence": "str",
+        "licenceNote": "str",
+        "attribution": "str",
+        "count": "int",
+        "rows": "list"
+      }
     }
   ]
 }
