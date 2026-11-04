@@ -27,9 +27,46 @@ def get_historical(state, year, office):
     data["dem_two_party_share"]=100*data["dem_votes"]/(data["dem_votes"]+data["rep_votes"]).replace(0,float("nan"))
     return data,payload.get("attribution","Polling Forecast"),payload.get("asOf","")
 
+
+@st.cache_data(ttl=300, show_spinner="Checking official state feeds via Open America...")
+def open_america_results(office):
+    url="https://openamerica.io/elections/results.json"
+    response=requests.get(url,params={"year":2026,"office":office},timeout=25,
+                          headers={"User-Agent":"ElectionMonitor2026/0.4","Accept":"application/json"})
+    response.raise_for_status()
+    payload=response.json()
+    if not isinstance(payload,dict) or payload.get("year")!=2026 or str(payload.get("office","")).lower()!=office.lower():
+        raise ValueError("Unexpected year, office, or response format")
+    return payload
+
+st.subheader("2026 statewide reported results")
+st.caption("Official state-election-office counts via Open America. Partial coverage, no county detail, no race calls or projections.")
+office_2026=st.selectbox("2026 office",["Senate","House","Governor"])
+try:
+    live=open_america_results(office_2026)
+    st.caption(f"Source: https://openamerica.io/elections/api/ | As of: {live.get('as_of') or 'No state reporting timestamp'}")
+    if live.get("stale"):
+        st.warning("Feed is marked stale by its provider.")
+    if not live.get("counting"):
+        st.info("No reported votes in the currently available provider feed.")
+    races=live.get("races",{})
+    if isinstance(races,dict):
+        st.metric("Races present in source feed",len(races))
+        if races:
+            st.json(races,expanded=False)
+    elif isinstance(races,list):
+        st.metric("Races present in source feed",len(races))
+        if races:
+            st.dataframe(pd.json_normalize(races),hide_index=True,use_container_width=True)
+    else:
+        st.info("Provider has not supplied a compatible race collection.")
+except Exception as exc:
+    st.warning(f"2026 statewide feed is currently unavailable: {exc}")
+st.divider()
+
 st.subheader("Historical county election results")
 st.caption("Verified historical results only. These are NOT 2026 live returns.")
-historical_state=st.selectbox("Historical state",["SC","IN"],format_func=lambda x:{"SC":"South Carolina","IN":"Indiana"}[x])
+historical_state=st.selectbox("Historical state",["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"])
 historical_office=st.selectbox("Historical election",["2024 President","2022 Senate"])
 year,office=(2024,"P") if historical_office=="2024 President" else (2022,"S")
 try:
