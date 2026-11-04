@@ -29,6 +29,15 @@ def probe(name,url,params):
         if isinstance(data,dict):
             item["top_level_keys"]=list(data)[:35]
             item["field_types"]={k:type(v).__name__ for k,v in list(data.items())[:25]}
+            if name.startswith("pollingforecast"):
+                item["row_count"]=data.get("count")
+                item["licence"]=data.get("licence")
+                item["licence_note"]=data.get("licenceNote")
+                item["attribution"]=data.get("attribution")
+                rows=data.get("rows",[])
+                if isinstance(rows,list) and rows and isinstance(rows[0],dict):
+                    item["first_row_keys"]=list(rows[0])
+                    item["first_row_sample"]=rows[0]
             if name=="peoples_tally":
                 item["generated_at"]=data.get("generated_at")
                 item["status"]=data.get("status")
