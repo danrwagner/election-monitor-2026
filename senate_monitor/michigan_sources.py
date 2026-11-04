@@ -1,12 +1,31 @@
-# Michigan 2026 county election source registry
-# These are human-readable official county election pages, not validated machine-readable feeds.
-# No vote totals are imported until each endpoint and race schema is verified.
+"""Verified Michigan 2026 county election result landing pages.
+
+These are official county-linked result pages, not yet validated structured APIs.
+Do not treat page availability as evidence of reported votes.
+"""
 SOURCES = {
-    "Wayne": "https://michigan.totalvote.com/Wayne",
-    "Oakland": "https://www.oakgov.com/government/clerk-register-of-deeds/elections-voting/election-results",
-    "Macomb": "https://www.macombgov.org/departments/clerk-register-deeds/elections",
-    "Kent": "https://www.kentcountymi.gov/335/Election-Results",
-    "Genesee": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
-    "Washtenaw": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+    "Wayne": {
+        "url": "https://michigan.totalvote.com/Wayne",
+        "status": "official result page; machine-readable feed not verified",
+    },
+    "Kent": {
+        "url": "https://app.enhancedvoting.com/results/public/kent-county-mi/elections/11032026_20261005115447",
+        "status": "official 2026 result page linked from Kent County; API not verified",
+    },
+    "Oakland": {
+        "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+        "status": "official county directory; direct 2026 feed not verified",
+    },
+    "Macomb": {
+        "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+        "status": "official county directory; direct 2026 feed not verified",
+    },
+    "Genesee": {
+        "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+        "status": "official county directory; direct 2026 feed not verified",
+    },
+    "Washtenaw": {
+        "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+        "status": "official county directory; direct 2026 feed not verified",
+    },
 }
-# Oakland path is a candidate page to validate before automation.
