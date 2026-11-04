@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-04T03:12:46.554699+00:00",
+  "checked_at": "2026-11-04T03:15:17.075732+00:00",
   "status": "schema_discovery_only",
   "checks": [
     {
@@ -12,6 +12,32 @@
       "payload_bytes": 71719155,
       "source": "Arizona Secretary of State / Enhanced Voting",
       "note": "Schema only, no election counts imported",
+      "results_type": "dict",
+      "results_count": 4,
+      "results_keys": [
+        "id",
+        "name",
+        "ballotItems",
+        "reportingStatuses"
+      ],
+      "localResults_type": "list",
+      "localResults_count": 15,
+      "localResults_first_keys": [
+        "id",
+        "name",
+        "ballotItems",
+        "reportingStatuses"
+      ],
+      "localResults_first_types": {
+        "id": "str",
+        "name": "str",
+        "ballotItems": "list",
+        "reportingStatuses": "NoneType"
+      },
+      "localResults_first_labels": {
+        "id": "05",
+        "name": "Graham County"
+      },
       "top_level_keys": [
         "electionDate",
         "electionName",
@@ -31,8 +57,8 @@
       "provider": "civicapi",
       "url": "https://civicapi.org/api/v2/races",
       "params": {},
-      "http_status": 502,
-      "content_type": "text/html; charset=UTF-8",
+      "http_status": 404,
+      "content_type": "application/json; charset=utf-8",
       "error": "HTTP error; no data imported"
     },
     {
