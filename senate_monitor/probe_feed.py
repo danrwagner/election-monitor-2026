@@ -31,6 +31,21 @@ def probe(name,url,params):
             item["payload_bytes"]=len(r.content)
             item["source"]="Arizona Secretary of State / Enhanced Voting"
             item["note"]="Schema only, no election counts imported"
+            for section in ("results","localResults"):
+                value=data.get(section)
+                item[section+"_type"]=type(value).__name__
+                item[section+"_count"]=len(value) if isinstance(value,(dict,list)) else None
+                if isinstance(value,dict):
+                    item[section+"_keys"]=list(value)[:25]
+                    first=next(iter(value.values()),None)
+                elif isinstance(value,list):
+                    first=value[0] if value else None
+                else:
+                    first=None
+                if isinstance(first,dict):
+                    item[section+"_first_keys"]=list(first)[:50]
+                    item[section+"_first_types"]={k:type(v).__name__ for k,v in list(first.items())[:35]}
+                    item[section+"_first_labels"]={k:str(v)[:100] for k,v in first.items() if isinstance(v,str)}
         if isinstance(data,dict):
             item["top_level_keys"]=list(data)[:35]
             item["field_types"]={k:type(v).__name__ for k,v in list(data.items())[:25]}
