@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-04T03:08:39.304671+00:00",
+  "checked_at": "2026-11-04T03:09:29.288561+00:00",
   "status": "schema_discovery_only",
   "checks": [
     {
@@ -50,6 +50,36 @@
         "attribution": "str",
         "count": "int",
         "rows": "list"
+      },
+      "row_count": 46,
+      "licence": "CC BY 4.0",
+      "licence_note": "CC0 (MEDSL); president 2020 CC BY 4.0 (VEST)",
+      "attribution": "Polling Forecast (www.pollingforecast.com). Each row's licence column gives the terms for that row.",
+      "first_row_keys": [
+        "fips",
+        "state",
+        "county",
+        "office",
+        "year",
+        "dem_votes",
+        "rep_votes",
+        "total_votes",
+        "margin",
+        "source",
+        "licence"
+      ],
+      "first_row_sample": {
+        "fips": "45001",
+        "state": "SC",
+        "county": "Abbeville",
+        "office": "President",
+        "year": 2024,
+        "dem_votes": 3399,
+        "rep_votes": 8509,
+        "total_votes": 12048,
+        "margin": -42.4,
+        "source": "MEDSL 2024 precinct returns summed by county (CC0)",
+        "licence": "CC0 (MEDSL)"
       }
     },
     {
@@ -84,6 +114,36 @@
         "attribution": "str",
         "count": "int",
         "rows": "list"
+      },
+      "row_count": 46,
+      "licence": "CC BY 4.0",
+      "licence_note": "CC0 (MEDSL); president 2020 CC BY 4.0 (VEST)",
+      "attribution": "Polling Forecast (www.pollingforecast.com). Each row's licence column gives the terms for that row.",
+      "first_row_keys": [
+        "fips",
+        "state",
+        "county",
+        "office",
+        "year",
+        "dem_votes",
+        "rep_votes",
+        "total_votes",
+        "margin",
+        "source",
+        "licence"
+      ],
+      "first_row_sample": {
+        "fips": "45001",
+        "state": "SC",
+        "county": "Abbeville",
+        "office": "Senate",
+        "year": 2022,
+        "dem_votes": 2309,
+        "rep_votes": 6255,
+        "total_votes": 8564,
+        "margin": -46.1,
+        "source": "MEDSL 2022 Senate precinct returns (CC0)",
+        "licence": "CC0 (MEDSL)"
       }
     }
   ]
