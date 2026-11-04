@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-04T03:07:18.836864+00:00",
+  "status": "schema_discovery_only",
+  "checks": [
+    {
+      "url": "https://civicapi.org/api/v2/races",
+      "http_status": 502,
+      "content_type": "text/html; charset=UTF-8",
+      "error": "Non-JSON response"
+    }
+  ]
+}
