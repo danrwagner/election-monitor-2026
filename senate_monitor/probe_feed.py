@@ -6,6 +6,7 @@ import requests
 
 OUTPUT = Path(__file__).resolve().parent / "feed_diagnostics.json"
 FEEDS = [
+    ("arizona_2026_official", "https://app.enhancedvoting.com/cdn/results/Arizona/export-110326GeneralElection.json", {}),
     ("civicapi", "https://civicapi.org/api/v2/races", {}),
     ("peoples_tally", "https://thepeoplestally.com/data/results.json", {}),
     ("pollingforecast_2024_sc", "https://www.pollingforecast.com/api/us/counties", {"office":"P","year":2024,"state":"SC"}),
@@ -26,6 +27,10 @@ def probe(name,url,params):
             item["error"]="Non-JSON response; no data imported"
             return item
         item["json_type"]=type(data).__name__
+        if name=="arizona_2026_official":
+            item["payload_bytes"]=len(r.content)
+            item["source"]="Arizona Secretary of State / Enhanced Voting"
+            item["note"]="Schema only, no election counts imported"
         if isinstance(data,dict):
             item["top_level_keys"]=list(data)[:35]
             item["field_types"]={k:type(v).__name__ for k,v in list(data.items())[:25]}
