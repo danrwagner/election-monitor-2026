@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-11-04T03:20:04.632348+00:00",
+  "status": "source_discovery_only",
+  "counties": [
+    {
+      "county": "Wayne",
+      "url": "https://michigan.totalvote.com/Wayne",
+      "verified_vote_feed": false,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://michigan.totalvote.com/Wayne",
+      "note": "Page accessible, not a verified machine-readable election feed"
+    },
+    {
+      "county": "Kent",
+      "url": "https://app.enhancedvoting.com/results/public/kent-county-mi/elections/11032026_20261005115447",
+      "verified_vote_feed": false,
+      "http_status": 200,
+      "content_type": "text/html",
+      "final_url": "https://app.enhancedvoting.com/results/public/kent-county-mi/elections/11032026_20261005115447",
+      "note": "Page accessible, not a verified machine-readable election feed"
+    },
+    {
+      "county": "Oakland",
+      "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "verified_vote_feed": false,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "note": "Page accessible, not a verified machine-readable election feed"
+    },
+    {
+      "county": "Macomb",
+      "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "verified_vote_feed": false,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "note": "Page accessible, not a verified machine-readable election feed"
+    },
+    {
+      "county": "Genesee",
+      "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "verified_vote_feed": false,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "note": "Page accessible, not a verified machine-readable election feed"
+    },
+    {
+      "county": "Washtenaw",
+      "url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "verified_vote_feed": false,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.michigan.gov/sos/elections/election-results-and-data/candidate-listings-and-election-results-by-county",
+      "note": "Page accessible, not a verified machine-readable election feed"
+    }
+  ]
+}
