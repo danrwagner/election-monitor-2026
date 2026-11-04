@@ -39,6 +39,29 @@ def open_america_results(office):
         raise ValueError("Unexpected year, office, or response format")
     return payload
 
+st.subheader("Michigan 2026: Senate and governor")
+st.caption("Live candidate totals from Polling Desk (citing civicAPI). These are reported votes, not our own projections or certified totals.")
+@st.cache_data(ttl=300,show_spinner="Loading Michigan election returns...")
+def michigan_2026():
+    import io
+    response=requests.get("https://polling-desk.com/data/mi/results.csv",timeout=20,
+                          headers={"User-Agent":"ElectionMonitor2026/0.5","Accept":"text/csv"})
+    response.raise_for_status()
+    if "html" in response.headers.get("Content-Type","").lower():
+        raise ValueError("CSV source returned HTML")
+    frame=pd.read_csv(io.BytesIO(response.content))
+    if frame.empty:
+        raise ValueError("No candidate results in source")
+    return frame
+try:
+    mi=michigan_2026()
+    st.caption("Source: Polling Desk / civicAPI | Refreshes on dashboard approximately every 5 minutes.")
+    st.dataframe(mi,hide_index=True,use_container_width=True)
+    st.caption("County-level Michigan 2026 candidate results have not yet been verified; this is the statewide race-results feed.")
+except Exception as exc:
+    st.warning(f"Michigan candidate results unavailable from source: {exc}")
+st.divider()
+
 st.subheader("2026 statewide reported results")
 st.caption("Official state-election-office counts via Open America. Partial coverage, no county detail, no race calls or projections.")
 office_2026=st.selectbox("2026 office",["Senate","House","Governor"])
