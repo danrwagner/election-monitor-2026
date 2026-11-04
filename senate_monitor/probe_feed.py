@@ -1,39 +1,56 @@
-"""Non-destructive civicAPI connectivity/schema probe; never invents vote totals."""
+"""Probe documented public election feeds. Diagnostics only; no vote data is fabricated."""
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 import requests
 
-BASE = "https://civicapi.org/api/v2"
 OUTPUT = Path(__file__).resolve().parent / "feed_diagnostics.json"
-# Only documented base and candidate discovery paths; do not assume a response schema.
-PATHS = ["/races"]
-def run():
-    checks=[]
-    for path in PATHS:
-        url=BASE+path
-        item={"url":url}
+FEEDS = [
+    ("civicapi", "https://civicapi.org/api/v2/races", {}),
+    ("peoples_tally", "https://thepeoplestally.com/data/results.json", {}),
+    ("pollingforecast_2024_sc", "https://www.pollingforecast.com/api/us/counties", {"office":"P","year":2024,"state":"SC"}),
+    ("pollingforecast_2022_sc", "https://www.pollingforecast.com/api/us/counties", {"office":"S","year":2022,"state":"SC"}),
+]
+def probe(name,url,params):
+    item={"provider":name,"url":url,"params":params}
+    try:
+        r=requests.get(url,params=params,timeout=25,headers={"User-Agent":"ElectionMonitor2026/0.2 public research"})
+        item["http_status"]=r.status_code
+        item["content_type"]=r.headers.get("Content-Type","")
+        if not r.ok:
+            item["error"]="HTTP error; no data imported"
+            return item
         try:
-            response=requests.get(url,params={"date":"2026-11-03"},timeout=20,
-                                  headers={"User-Agent":"ElectionMonitor2026/0.1 (public research)"})
-            item["http_status"]=response.status_code
-            item["content_type"]=response.headers.get("Content-Type","")
-            try:
-                payload=response.json()
-                item["json_type"]=type(payload).__name__
-                if isinstance(payload,dict):
-                    item["top_level_keys"]=list(payload.keys())[:35]
-                    item["sample_types"]={k:type(v).__name__ for k,v in list(payload.items())[:20]}
-                elif isinstance(payload,list):
-                    item["list_length"]=len(payload)
-                    if payload and isinstance(payload[0],dict):
-                        item["first_item_keys"]=list(payload[0].keys())[:35]
-            except ValueError:
-                item["error"]="Non-JSON response"
-        except requests.RequestException as exc:
-            item["error"]=str(exc)[:350]
-        checks.append(item)
-    OUTPUT.write_text(json.dumps({"checked_at":datetime.now(timezone.utc).isoformat(),
-                                   "status":"schema_discovery_only","checks":checks},indent=2)+"\n")
+            data=r.json()
+        except ValueError:
+            item["error"]="Non-JSON response; no data imported"
+            return item
+        item["json_type"]=type(data).__name__
+        if isinstance(data,dict):
+            item["top_level_keys"]=list(data)[:35]
+            item["field_types"]={k:type(v).__name__ for k,v in list(data.items())[:25]}
+            if name=="peoples_tally":
+                item["generated_at"]=data.get("generated_at")
+                item["status"]=data.get("status")
+                for field in ("races","states","counties"):
+                    v=data.get(field)
+                    item[field+"_count"]=len(v) if isinstance(v,(dict,list)) else None
+                if isinstance(data.get("counties"),dict) and data["counties"]:
+                    key=next(iter(data["counties"]))
+                    item["county_example_key"]=key
+                    value=data["counties"][key]
+                    item["county_example_fields"]=list(value)[:35] if isinstance(value,dict) else type(value).__name__
+        elif isinstance(data,list):
+            item["list_length"]=len(data)
+            if data and isinstance(data[0],dict):
+                item["first_item_keys"]=list(data[0])[:35]
+    except requests.RequestException as e:
+        item["error"]=str(e)[:250]
+    return item
+
+if __name__=="__main__":
+    result={"checked_at":datetime.now(timezone.utc).isoformat(),
+            "status":"schema_discovery_only",
+            "checks":[probe(*feed) for feed in FEEDS]}
+    OUTPUT.write_text(json.dumps(result,indent=2)+"\n")
     print(OUTPUT.read_text())
-if __name__=="__main__":run()
