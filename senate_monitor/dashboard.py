@@ -5,13 +5,20 @@ import streamlit as st
 st.set_page_config(page_title='County election monitor',layout='wide')
 st.title('2026 County Election Monitor')
 st.caption('Observed returns and historical comparisons only. No race calls or projected winners. Data are not independently verified.')
+from monitor import db
+with db() as connection:
+    pass
 p=Path(__file__).parent/'monitor.sqlite'
-if not p.exists():st.warning('No database yet. Run python monitor.py --once');st.stop()
 with sqlite3.connect(p) as c:
  snaps=pd.read_sql_query('SELECT * FROM snapshots ORDER BY observed_at',c)
  current=pd.read_sql_query('SELECT * FROM current',c)
  logs=pd.read_sql_query('SELECT * FROM ingest_log ORDER BY at DESC LIMIT 15',c)
-if snaps.empty:st.info('No results ingested. Configure a public CSV feed or import the provided example format.');st.stop()
+if snaps.empty:
+    st.info('Dashboard deployed and database initialized. No verified live 2026 county results have been ingested yet.')
+    st.warning('This app is not yet connected to civicAPI or a scheduled poller. Do not interpret the empty dashboard as zero reported votes.')
+    with st.expander('Ingestion diagnostics'):
+        st.dataframe(logs,hide_index=True,use_container_width=True)
+    st.stop()
 latest=snaps.sort_values('observed_at').groupby(['state','race']).tail(1).copy()
 latest['two_party_dem_share']=100*latest.observed_dem/(latest.observed_dem+latest.observed_rep).replace(0,float('nan'))
 st.subheader('National observed aggregate')
