@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-05T23:56:10.137306+00:00",
+  "checked_at": "2026-11-06T04:50:39.930521+00:00",
   "status": "schema_discovery_only",
   "checks": [
     {
@@ -9,7 +9,7 @@
       "http_status": 200,
       "content_type": "application/octet-stream",
       "json_type": "dict",
-      "payload_bytes": 72589663,
+      "payload_bytes": 72598530,
       "source": "Arizona Secretary of State / Enhanced Voting",
       "note": "Schema only, no election counts imported",
       "results_type": "dict",
@@ -35,8 +35,8 @@
         "reportingStatuses": "list"
       },
       "localResults_first_labels": {
-        "id": "02",
-        "name": "Cochise County"
+        "id": "06",
+        "name": "Greenlee County"
       },
       "top_level_keys": [
         "electionDate",
