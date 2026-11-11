@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T00:39:25.459692+00:00",
+  "checked_at": "2026-11-11T07:06:41.219508+00:00",
   "status": "schema_discovery_only",
   "checks": [
     {
@@ -9,7 +9,7 @@
       "http_status": 200,
       "content_type": "application/octet-stream",
       "json_type": "dict",
-      "payload_bytes": 72716732,
+      "payload_bytes": 72719376,
       "source": "Arizona Secretary of State / Enhanced Voting",
       "note": "Schema only, no election counts imported",
       "results_type": "dict",
