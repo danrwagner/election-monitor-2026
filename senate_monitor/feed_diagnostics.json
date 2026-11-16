@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T03:16:30.662895+00:00",
+  "checked_at": "2026-11-16T11:35:15.094733+00:00",
   "status": "schema_discovery_only",
   "checks": [
     {
@@ -57,17 +57,46 @@
       "provider": "civicapi",
       "url": "https://civicapi.org/api/v2/races",
       "params": {},
-      "http_status": 404,
-      "content_type": "application/json; charset=utf-8",
+      "http_status": 521,
+      "content_type": "text/html; charset=UTF-8",
       "error": "HTTP error; no data imported"
     },
     {
       "provider": "peoples_tally",
       "url": "https://thepeoplestally.com/data/results.json",
       "params": {},
-      "http_status": 403,
-      "content_type": "text/html; charset=UTF-8",
-      "error": "HTTP error; no data imported"
+      "http_status": 200,
+      "content_type": "application/json",
+      "json_type": "dict",
+      "top_level_keys": [
+        "updates",
+        "generated_at",
+        "generated_at_et",
+        "status",
+        "source",
+        "national",
+        "races",
+        "states",
+        "counties",
+        "measures"
+      ],
+      "field_types": {
+        "updates": "list",
+        "generated_at": "str",
+        "generated_at_et": "str",
+        "status": "str",
+        "source": "NoneType",
+        "national": "dict",
+        "races": "dict",
+        "states": "dict",
+        "counties": "dict",
+        "measures": "dict"
+      },
+      "generated_at": "2026-11-06T13:52:09.614169-05:00",
+      "status": "Unofficial results and attributed projections; incomplete official vote coverage",
+      "races_count": 0,
+      "states_count": 0,
+      "counties_count": 0
     },
     {
       "provider": "pollingforecast_2024_sc",
